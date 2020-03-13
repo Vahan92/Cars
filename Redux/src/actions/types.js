@@ -1,0 +1,3 @@
+export const FETCH_CARS = 'FETCH_CARS';
+export const SUCCESSFULY_REGISTERED = 'SUCCESSFULY_REGISTERED';
+export const I_AM_A_TEAPOT = 'I_AM_A_TEAPOT';
