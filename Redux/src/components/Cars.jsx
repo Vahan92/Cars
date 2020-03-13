@@ -22,8 +22,6 @@ function Users() {
   const dispatch = useDispatch();
   const results = useSelector(state => state);
 
-  console.log(`results.carsReducer `, results.carsReducer)
-
   useEffect(() => {
     dispatch(fetchCars());
   }, [dispatch]);
@@ -65,7 +63,7 @@ function Users() {
   }
 
   const deleteCars = () => {
-    deleteMany(deleteArray);
+    dispatch(deleteMany(deleteArray));
     setDeleteArray([]);
   }
 
@@ -79,50 +77,58 @@ function Users() {
     <>
       {results.carsReducer.loading ? (
         "Loading..."
-      ) : (
-          <>
-            <Table responsive>
-              <thead>
-                <tr>
-                  {Object.keys(results.carsReducer.users[0]).filter(el => el !== "_id").map(el => (
-                    <th key={el}>{el}</th>
-                  ))}
-                  <th>Actions</th>
-                  <th>
-                    <Button disabled={deleteArray.length < 2} onClick={deleteCars} variant="outline-primary">Delete selected</Button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {results.carsReducer.users.map(el => (
-                  <tr key={el._id}>
-                    <td>{el.brand}</td>
-                    <td>{el.model}</td>
-                    <td>{el.year}</td>
-                    <td>{el.color}</td>
-                    <td>{el.type}</td>
-                    <td>
-                      <Popconfirm
-                        title="Are you sure you want to delete this car?"
-                        placement="left"
-                        onConfirm={() => {confirmDelete(el._id)}}
-                        okText="Yes"
-                        cancelText="No"
-                      >
-                        <Icon type="delete" style={{ color: 'red', marginRight: "0.5rem" }} />
-                      </Popconfirm>
-                      <Icon type="edit" style={{ color: "#e6e600" }} onClick={() => edit(el)} />
-                    </td>
-                    <td><input onClick={() => { selectToDelete(el._id) }} type="checkbox" /></td>
-                  </tr>
+      ) : results.carsReducer.cars.length ? (
+        <>
+          <Table responsive>
+            <thead>
+              <tr>
+                {Object.keys(results.carsReducer.cars[0]).filter(el => el !== "_id").map(el => (
+                  <th key={el}>{el}</th>
                 ))}
-              </tbody>
-            </Table>
-            <div>
-              <Button onClick={addCarModal} variant="outline-primary">Add Car</Button>
-            </div>
-          </>
-        )}
+                <th>Actions</th>
+                <th>
+                  <Popconfirm
+                    title="Are you sure you want to delete selected cars?"
+                    placement="left"
+                    onConfirm={deleteCars}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Button disabled={deleteArray.length < 2} variant="outline-primary">Delete selected</Button>
+                  </Popconfirm>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.carsReducer.cars.map(el => (
+                <tr key={el._id}>
+                  <td>{el.brand}</td>
+                  <td>{el.model}</td>
+                  <td>{el.year}</td>
+                  <td>{el.color}</td>
+                  <td>{el.type}</td>
+                  <td>
+                    <Popconfirm
+                      title="Are you sure you want to delete this car?"
+                      placement="left"
+                      onConfirm={() => { confirmDelete(el._id) }}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Icon type="delete" style={{ color: 'red', marginRight: "0.5rem" }} />
+                    </Popconfirm>
+                    <Icon type="edit" style={{ color: "#e6e600" }} onClick={() => edit(el)} />
+                  </td>
+                  <td><input onClick={() => { selectToDelete(el._id) }} type="checkbox" /></td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </>
+      ) : <h5>Ther are not any cars to be shown</h5>}
+      <div>
+        <Button onClick={addCarModal} variant="outline-primary">Add Car</Button>
+      </div>
       <Modal
         show={modal}
         size="lg"

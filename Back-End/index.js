@@ -10,9 +10,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
-mongoose.connect("mongodb+srv://vahan:iamvahan@vehicles-6jzyi.mongodb.net/test?retryWrites=true&w=majority")
-    .then(() => console.log('Now connected to MongoDB!'))
-    .catch(err => console.error('Something went wrong', err));
+mongoose.connect("mongodb+srv://vahan:iamvahan@vehicles-6jzyi.mongodb.net/test?retryWrites=true&w=majority", { useNewUrlParser: true })
+  .then(() => console.log('Now connected to MongoDB!'))
+  .catch(err => console.error('Something went wrong', err));
 
 app.use(cors());
 app.use(express.json());
