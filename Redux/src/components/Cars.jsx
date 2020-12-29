@@ -2,7 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Table, Button, Modal } from 'react-bootstrap';
 import { Icon, Popconfirm } from 'antd';
-import { fetchCars, confirm, saveEdit, addCar, deleteMany } from '../actions/CarActions';
+import { fetchCars, confirm, saveEdit, addCar, deleteMany, getCars, createPost, editCar, removeCars } from '../actions/CarActions';
 
 function Users() {
   const [editModal, showEditmodal] = useState(false);
@@ -22,8 +22,11 @@ function Users() {
   const dispatch = useDispatch();
   const results = useSelector(state => state);
 
+  console.log(`results `, results);
+
   useEffect(() => {
-    dispatch(fetchCars());
+    // dispatch(fetchCars());
+    dispatch(getCars());
   }, [dispatch]);
 
   const onChange = evt => {
@@ -34,12 +37,15 @@ function Users() {
 
   const saveReportChanges = e => {
     e.preventDefault();
-    dispatch(saveEdit(carInput));
+    // dispatch(saveEdit(carInput));
+    dispatch(editCar(carInput));
   }
 
   const registerCar = e => {
     e.preventDefault();
-    dispatch(addCar(carInput));
+    // dispatch(addCar(carInput));
+    console.log(carInput);
+    dispatch(createPost(carInput))
   }
 
   const edit = user => {
@@ -63,7 +69,8 @@ function Users() {
   }
 
   const deleteCars = () => {
-    dispatch(deleteMany(deleteArray));
+    // dispatch(deleteMany(deleteArray));
+    dispatch(removeCars(deleteArray))
     setDeleteArray([]);
   }
 

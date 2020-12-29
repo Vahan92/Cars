@@ -13,6 +13,46 @@ export const fetchCars = () => dispatch => {
     );
 };
 
+export const getCars = () => ({
+  type: 'GET_CARS_REQUEST'
+});
+
+export const getCarsSuccess = items => ({
+  type: FETCH_CARS,
+  payload: items
+});
+
+export const createPost = data => { console.log(`data `, data); return{
+  type: 'CREATE_POST_SUCCESS',
+  payload: data
+}};
+
+export const createPostSuccess = res => ({
+  type: SUCCESSFULY_REGISTERED,
+  payload: res
+});
+
+export const removeCare = (id) => ({
+  type: 'REMOVE_CAR',
+  payload: id
+});
+
+export const removeCareSuccess = () => (message.success('Car was successfully deleted', 7));
+
+export const editCar = (car) => ({
+  type: 'EDIT_CAR',
+  payload: car
+});
+
+export const editCarSuccess = () => (message.success('Car information successfully updated', 7));
+
+export const removeCars = (ids) => { console.log(`ids `, ids); return{
+  type: 'REMOVE_CARS',
+  payload: ids
+}};
+
+export const removeCarsSuccess = () => (message.success('Cars successfully deleted', 7));
+
 export const addCar = postData => dispatch => {
   axios
     .post('http://localhost:4000/api/addCar', postData).then(res => {
