@@ -8,7 +8,7 @@ const baseUrl = "http://localhost:4000/api";
 function* getCars() {
   try {
     const result = yield call(() => {
-      return axios.get(`${baseUrl}/getCars`);
+      return axios.get(`https://jsonplaceholder.typicode.com/comments`);
     });
     yield put(actions.getCarsSuccess(result.data));
   } catch (error) {

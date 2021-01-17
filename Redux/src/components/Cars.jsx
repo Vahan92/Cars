@@ -2,6 +2,7 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Table, Button, Modal } from 'react-bootstrap';
 import { Icon, Popconfirm } from 'antd';
+import Pagination from './Pagination';
 import { fetchCars, confirm, saveEdit, addCar, deleteMany, getCars, createPost, editCar, removeCars } from '../actions/CarActions';
 
 function Users() {
@@ -89,7 +90,7 @@ function Users() {
           <Table responsive>
             <thead>
               <tr>
-                {Object.keys(results.carsReducer.cars[0]).filter(el => el !== "_id").map(el => (
+                {Object.keys(results.carsReducer.cars[0]).filter(el => el !== "id" && el !== 'postId').map(el => (
                   <th key={el}>{el}</th>
                 ))}
                 <th>Actions</th>
@@ -108,12 +109,12 @@ function Users() {
             </thead>
             <tbody>
               {results.carsReducer.cars.map(el => (
-                <tr key={el._id}>
-                  <td>{el.brand}</td>
-                  <td>{el.model}</td>
-                  <td>{el.year}</td>
-                  <td>{el.color}</td>
-                  <td>{el.type}</td>
+                <tr key={el.id}>
+                  <td>{el.name}</td>
+                  <td>{el.email}</td>
+                  <td>{el.body}</td>
+                  {/* <td>{el.color}</td>
+                  <td>{el.type}</td> */}
                   <td>
                     <Popconfirm
                       title="Are you sure you want to delete this car?"
@@ -131,6 +132,7 @@ function Users() {
               ))}
             </tbody>
           </Table>
+          <Pagination total={results.carsReducer.cars.length}/>
         </>
       ) : <h5>Ther are not any cars to be shown</h5>}
       <div>
